@@ -33,7 +33,28 @@ router.get('/:id/shoppingList', (req, res) => {
             res.status(500).json({
                 error: 'Failed to get ingredients.'
             })
-            console.log(err)
+            console.log(err);
+        })
+})
+
+router.get('/:id/steps', (req, res) => {
+    const {id} = req.params;
+
+    recipes.getInstructions(id)
+        .then(steps => {
+            if (steps.length) {
+                res.status(200).json(steps);
+            } else {
+                res.status(500).json({
+                    error: 'Could not find steps for given recipe.'
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                error: 'Failed to get steps.'
+            })
+            console.log(err);
         })
 })
 
